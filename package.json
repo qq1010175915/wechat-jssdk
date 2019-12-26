@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "charenc": "^0.0.2",
+    "crypt": "^0.0.2",
+    "sha1": "^1.1.1"
+  }
+}

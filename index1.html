@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    $.ajax({
+    url:"http://3s.dkys.org:29802/api",    //请求的url地址
+    dataType:"json",   //返回格式为json
+    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+    data:{"id":"value"},    //参数值
+    type:"POST",   //请求方式
+    beforeSend:function(){
+        //请求前的处理
+    },
+    success:function(req){
+        //请求成功时处理
+        console.log(req)
+        var data = req
+console.log(data)
+  wx.config({
+    debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    appId: data.appId, // 必填，公众号的唯一标识
+    timestamp: data.timestamp, // 必填，生成签名的时间戳
+    nonceStr: data.nonceStr, // 必填，生成签名的随机串
+    signature: data.signature,// 必填，签名，见附录1
+    jsApiList: ['getLocation','updateAppMessageShareData'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+  });
+ 
+  wx.ready(function () {
+    console.log("config 验证完成, 会进入的方法");
+    console.log("下面可以定义自身需要执行的其他方法");
+    wx.updateAppMessageShareData({ 
+        title: '分享标题', // 分享标题
+        desc: '分享测试', // 分享描述
+        link: 'http://3s.dkys.org:29802/changlu.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://3s.dkys.org:29802/2.jpg', // 分享图标
+        success: function () {
+        // 设置成功
+        }
+    })
+    wx.updateTimelineShareData({ 
+        title: '分享标题', // 分享标题
+        desc: '分享测试', // 分享描述
+        link: 'http://3s.dkys.org:29802/changlu.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: 'http://3s.dkys.org:29802/2.jpg', // 分享图标
+        success: function () {
+        // 设置成功
+        }
+  })
+ })
+ 
+  wx.error(function (res) {
+    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+  })
+    },
+    complete:function(){
+        //请求完成的处理
+    },
+    error:function(){
+        //请求出错处理
+    }
+});
+
+</script>
+</html>
